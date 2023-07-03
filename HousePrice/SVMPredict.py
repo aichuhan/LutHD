@@ -14,8 +14,8 @@ target = load_boston().target #获取波士顿房价数据集的目标值
 house_x_train, house_x_test, house_y_train, house_y_test = train_test_split(data,target, test_size=0.3) #将数据集按照7:3的比例划分为训练集和测试集
 
 transfer = StandardScaler() #创建一个标准化处理对象
-house_x_train = transfer.fit_transform(house_x_train) #对训练集数据进行标准化处理
-house_x_test = transfer.fit_transform(house_x_test) #对测试集数据进行标准化处理
+house_x_train = transfer.fit_transform(house_x_train)     #对训练集数据进行标准化处理  :即，均值为0，标准差为1
+house_x_test = transfer.fit_transform(house_x_test)      #对测试集数据进行标准化处理  即，均值为0，标准差为1
 
 original_house_data_model = LinearRegression()  #创建一个线性回归模型对象
 original_house_data_model.fit(house_x_train, house_y_train)  #用训练集数据对线性回归模型进行训练
