@@ -8,6 +8,7 @@ from sklearn.datasets import load_boston #导入波士顿房价数据集
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# 获取数据
 data = pd.DataFrame(load_boston().data) #将波士顿房价数据集的特征转换为DataFrame格式
 target = load_boston().target #获取波士顿房价数据集的目标值
 
@@ -17,14 +18,49 @@ transfer = StandardScaler() #创建一个标准化处理对象
 house_x_train = transfer.fit_transform(house_x_train)     #对训练集数据进行标准化处理  :即，均值为0，标准差为1
 house_x_test = transfer.fit_transform(house_x_test)      #对测试集数据进行标准化处理  即，均值为0，标准差为1
 
-original_house_data_model = LinearRegression()  #创建一个线性回归模型对象
-original_house_data_model.fit(house_x_train, house_y_train)  #用训练集数据对线性回归模型进行训练
 
-house_y_predict = original_house_data_model.predict(house_x_test)  #用训练好的线性回归模型对测试集数据进行预测
+# 创建一个线性回归模型对象,  用训练集数据对线性回归模型进行训练
+original_house_data_model = LinearRegression()
+original_house_data_model.fit(house_x_train, house_y_train)
+# 计算拟合优度
+print('计算拟合优度',original_house_data_model.score(house_x_test, house_y_test))
+#用训练好的线性回归模型对测试集数据进行预测
+house_y_predict = original_house_data_model.predict(house_x_test)
 
-rbf_svr=SVR(kernel='rbf')   #创建一个使用径向基核函数的支持向量回归模型对象
+
+
+# 创建一个使用径向基核函数的支持向量回归模型对象
+rbf_svr=SVR(kernel='rbf')
 rbf_svr.fit(house_x_train, house_y_train) #用训练集数据对支持向量回归模型进行训练
 rbf_svr_y_predict_1=rbf_svr.predict(house_x_test) #用训练好的支持向量回归模型对测试集数据进行预测
+
+
+# 使用二次多项式内核
+rbf_svr=SVR(kernel='rbf',degree=2)
+rbf_svr.fit(house_x_train, house_y_train) #用训练集数据对支持向量回归模型进行训练
+rbf_svr_y_predict_1=rbf_svr.predict(house_x_test) #用训练好的支持向量回归模型对测试集数据进行预测
+print('计算拟合优度',original_house_data_model.score(house_x_test, house_y_test))
+
+
+
+# 使用三次多项式内核
+rbf_svr=SVR(kernel='rbf',degree=3)
+rbf_svr.fit(house_x_train, house_y_train) #用训练集数据对支持向量回归模型进行训练
+rbf_svr_y_predict_1=rbf_svr.predict(house_x_test) #用训练好的支持向量回归模型对测试集数据进行预测
+print('计算拟合优度',original_house_data_model.score(house_x_test, house_y_test))
+
+
+# 使用S型内核
+rbf_svr=SVR(kernel='sigmoid')
+rbf_svr.fit(house_x_train, house_y_train) #用训练集数据对支持向量回归模型进行训练
+rbf_svr_y_predict_1=rbf_svr.predict(house_x_test) #用训练好的支持向量回归模型对测试集数据进行预测
+print('计算拟合优度',original_house_data_model.score(house_x_test, house_y_test))
+
+
+
+
+
+
 
 print(len(house_y_test))
 x=range(0,152,1) #创建一个长度为106的序列，用于作为横坐标
